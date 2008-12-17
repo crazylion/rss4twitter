@@ -1,0 +1,19 @@
+=RSS4Twitter
+
+RSS4Twitter can parse your rss feed and throw the message to your twitter account.  
+Tested on MAC,linux(ubuntu).
+
+==Requirement:
+*twitter4r
+*tinyurl
+
+==HOW TO:
+
+1.setup the account information in the twitter.yml
+2.setup the rss feeds information in the twitter.yml 
+3.run the ./rss4twitter(chmod +x rss4twitter)
+4.and then you can see the result in your twitter !!!
+
+==TO DO : 
+* split the title by the correct length
+* use feedparser 

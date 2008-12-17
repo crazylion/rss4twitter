@@ -1,11 +1,11 @@
 --- 
 account: 
-  id: crazylion
+  id: id
   password: password
 feeds: 
-- last_time: Sun, 14 Dec 2008 17:27:01 +0800
+- last_time: ""
   greeting: hello
-  source: http://crazylion.wordpress.com/feed
-- last_time: Tue, 09 Dec 2008 19:12:47 +0800
+  source: http://www.demo.com 
+- last_time: ""
   greeting: hello
-  source: http://jazzliang.wordpress.com/feed
+  source: http://www.demo2.com
