@@ -1,0 +1,44 @@
+#!/usr/bin/ruby
+require('rubygems')
+require('twitter')
+require 'open-uri'
+require 'rexml/document'
+require 'time'
+require 'yaml'
+require 'tinyurl'
+
+#load file
+yaml = YAML::load_file("twitter.yml")
+id = yaml["account"]["id"]
+password = yaml["account"]["password"]
+for u in yaml['feeds']
+  p u["source"]
+  f = open(u["source"])
+  doc = REXML::Document.new(f)
+  visited = false 
+  last_time = Time.parse("1981-01-01 00:00")
+  last_time =Time.parse(u["last_time"]) if u["last_time"]!=nil and u["last_time"]!=""
+  visited = true if  u["last_time"]!=nil and u["last_time"]!=""
+  p last_time
+  doc.elements.each("rss/channel/item") do |item|
+    t = Time.parse(item.elements["pubDate"].text)
+    
+    if t>last_time or !visited
+      p "update.... #{item.elements["title"]}"
+      tinyurl = Tinyurl.new(item.elements["link"].text).tiny
+      message = u["greeting"]+item.elements["title"].text+""+tinyurl
+      #send status
+      client = Twitter::Client.new(:login=>"spatialmedia",:password=>"my0817")
+      status = client.status(:post,message)
+      last_time = t if t>last_time
+      sleep 1 
+    end
+  end
+  f.close
+
+  u["last_time"]= last_time.to_s
+end
+#write the last time back to file#write the last time back to file#write the last time back to file#write the last time back to file#write the last time back to file#write the last time back to file#write the last time back to file#write the last time back to file
+outfile = open("twitter.yml","w")
+outfile.write(YAML::dump(yaml))
+outfile.close
